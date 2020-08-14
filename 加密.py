@@ -1,11 +1,3 @@
-'''
-@Description: 可以把xx小说保存成图像哦 啊😍
-@Sample Intput: 
-@Output: 
-@Author: GengchenXu
-@CreateDate: 2020-07-11 12:16:17
-@LastEditTime: 2020-07-11 12:25:33
-'''
 
 from PIL import Image
 import math
@@ -28,7 +20,7 @@ def encode(text):
   return im
 
 if __name__=='__main__':
-  with open("清纯.txt",encoding="utf-8")as f:
+  with open("test.txt",encoding="utf-8")as f:
     all_text=f.read()
     
     im= encode (all_text)
