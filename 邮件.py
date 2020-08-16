@@ -101,7 +101,7 @@ def send_email():
     
     sender = "1658521687@qq.com"  # 发件人
     password = "mzsyiemwbbvdbefj"  # 授权码
-    receiver = "syxx46xgc@126.com"#收件人
+    receiver = "1658521687@qq.com"#收件人
     
     try:
         mail = MIMEText(info_all, 'plain', 'utf-8')  # 邮件内容
