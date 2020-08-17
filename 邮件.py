@@ -1,8 +1,11 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Oct 27 15:25:10 2019
-@author: Administrator
-"""
+'''
+@Description: 
+@Sample Intput: 
+@Output: 
+@Autor: GengchenXu
+@Date: 2019-10-07 12:04:13
+LastEditTime: 2020-08-17 12:21:29
+'''
 import datetime
 import smtplib
 from email.header import Header
@@ -11,9 +14,9 @@ from urllib import request
 from bs4 import BeautifulSoup
 from xpinyin import Pinyin
 pin = Pinyin()
- 
- 
- 
+
+
+
 def choice():
     print('请输入1代表直辖市,2代表非直辖市')
     num=input()
@@ -32,8 +35,8 @@ def choice():
             prov_pin=pin.get_pinyin(prov,'')#将次半1为斑查
             city_pin=pin.get_pinyin(city,'')
             get_info(prov_pin,city_pin,prov,city)
-            
- 
+
+
     
 def get_info(prov_pin,city_pin,prov,city):
     if prov_pin==None:
@@ -43,11 +46,11 @@ def get_info(prov_pin,city_pin,prov,city):
         url='https://tianqi.moji.com/weather/china/'
         url=url+prov_pin+'/'+city_pin
         print(url)
- 
+
     #获取天气信息begin#
     htmlData=request.urlopen(url).read().decode('utf8')
     data=BeautifulSoup(htmlData,'lxml')
- 
+
     #print(data.prettify())
     weather = data.find('div',attrs={'class':"wea_weather clearfix"})
     #print(weather)
@@ -64,14 +67,14 @@ def get_info(prov_pin,city_pin,prov,city):
     C=list(data.select(".live_index_grid > ul > li")[1].get_text().strip())
     C=C[0]+C[1]
     date=str(datetime.date.today())  #获取当天日期
- 
+
     if city=='北京' or city=='天津':
         weather_info='来自天气预报机器人的贴心提示\n'+city+'市'+','+date+'\n'+'实时温度: '+temp1+'℃'+','+ temp2 + '\n'  '湿度：' + H + '\n' '风速：' + S + '\n' '紫外线：' + C +'\n' '今日提示：' + A + '\n' +'今日限行：' + B
     elif city=='上海' or city=='重庆':
         weather_info='来自天气预报机器人的贴心提示\n'+city+'市'+','+date+'\n'+'实时温度: '+temp1+'℃'+','+ temp2 + '\n'  '湿度：' + H + '\n' '风速：' + S + '\n' '紫外线：' + C +'\n' '今日提示：' + A
     else:
         weather_info='来自天气预报机器人的贴心提示\n'+prov+'省'+city+'市'+','+date+'\n'+'实时温度: '+temp1+'℃'+','+ temp2 + '\n'  '湿度：' + H + '\n' '风速：' + S + '\n' '紫外线：' + C +'\n' '今日提示：' + A
- 
+
     #获取明日天气
     tom=data.select(".days.clearfix ")[1].find_all('li')
     #print(tom)
@@ -81,7 +84,7 @@ def get_info(prov_pin,city_pin,prov,city):
     S_t=S_t1+S_t2  #明日风速
     A_t=tom[-1].get_text().strip() #明日空气质量
     info_t = '\n明日天气：\n' + '温度：' + temp_t + '\n' + '风速：' + S_t + '\n' '空气质量：' + A_t + '\n'
- 
+
     #定义一个tips的字典
     tips_dict = {'cold':'感冒预测','makeup':'化妆指数','uray':'紫外线量','dress':'穿衣指数','car':'关于洗车','sport':'运动事宜'}
     info_tips=''
@@ -99,19 +102,19 @@ def get_info(prov_pin,city_pin,prov,city):
 # 发送邮件
 def send_email():
     
-    sender = "1658521687@qq.com"  # 发件人
-    password = "mzsyiemwbbvdbefj"  # 授权码
-    receiver = "1658521687@qq.com"#收件人
+    sender = "1*****@qq.com"  # 发件人
+    password = "******"  # 授权码
+    receiver = ["***@126.com","****@gmail.com","*****@163.com","*****@qq.com"]#收件人
     
     try:
         mail = MIMEText(info_all, 'plain', 'utf-8')  # 邮件内容
         mail['Subject'] = Header('今日天气预报', 'utf-8')  # 邮件主题
         mail['From'] = sender  # 发件人
-        mail['To'] = receiver  # 收件人
+        mail['To'] = ','.join(receiver)  # 收件人 msg['To'] = ','.join(my_user)
         smtp = smtplib.SMTP()
         smtp.connect('smtp.qq.com', 25)  # 连接邮箱服务器
         smtp.login(sender, password)  # 登录邮箱
-        smtp.sendmail(sender, receiver, mail.as_string())  # 第三个是把邮件内容变成字符串
+        smtp.sendmail(sender, mail['To'].split(','), mail.as_string())  # 第三个是把邮件内容变成字符串
         smtp.quit()  # 发送完毕，退出
         print('\n邮件已成功发送！')
     except Exception as e:
