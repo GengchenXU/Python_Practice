@@ -1,3 +1,11 @@
+'''
+Description: 
+Sample Intput: 
+Output: 
+Author: GengchenXu
+CreateDate: 2020-07-11 12:33:39
+LastEditTime: 2021-08-08 20:34:24
+'''
 import requests
 from bs4 import BeautifulSoup
 allUniv = []
@@ -25,7 +33,7 @@ def printUnivList(num):
         u=allUniv[i]
         print("{:^4}{:^10}{:^5}{:^8}{:^10}".format(u[0],u[1],u[2],u[3],u[6]))
 def main():
-    url = 'http://www.zuihaodaxue.cn/zuihaodaxuepaiming2018.html'
+    url = 'https://www.shanghairanking.cn/rankings/bcur/2021'
     html = getHTMLText(url)
     soup = BeautifulSoup(html, "html.parser")
     fillUnivList(soup)
