@@ -4,12 +4,12 @@
 @Output: 
 @Autor: GengchenXu
 @Date: 2019-10-07 12:04:13
-@LastEditTime: 2020-06-09 14:13:53
+LastEditTime: 2021-10-03 14:35:37
 '''
 print("小垃圾游戏")
 temp=input("不妨猜一下我现在心里想的是什么:")
 guess=int(temp)
-if guess==8
+if guess==8:
     print("卧槽，你是我心里的蛔虫吗")
     print("哼，居然被你猜中了")
 else:
